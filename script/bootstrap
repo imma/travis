@@ -3,8 +3,15 @@
 function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
+  source normalize
 
-  uname -a
+  block compile bundler
+
+  mkdir -p "$shome/bin"
+  cd "$shome/bin"
+  (set +f; ln -nfs \
+    ../vendor/bundle/bin/travis \
+    "$shome/bin/")
 }
 
 main "$@"
